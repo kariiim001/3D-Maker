@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "image-to-3d"
+version = "1.0.0"
+description = "Turn a photo into a 3D model (.glb/.obj) using free Hugging Face Spaces - no local GPU needed."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "gradio_client",
+    "httpx",
+    "pillow",
+]
+
+[project.optional-dependencies]
+rembg = ["rembg[cpu]"]      # local background removal
+ui = ["gradio"]             # web UI
+obj = ["trimesh"]           # --format obj
+all = ["rembg[cpu]", "gradio", "trimesh"]
+dev = ["pytest", "pyflakes"]
+
+[project.scripts]
+image-to-3d = "image_to_3d.interfaces.cli:run"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
